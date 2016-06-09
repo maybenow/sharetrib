@@ -1801,6 +1801,8 @@ zh:
         other: "访问%{service_name}受限。你需要一个电子邮件地址来加入。"
       family_name: 姓
       given_name: 名
+      phone_number: 电话号码
+      weixin: 微信号
       i_accept_the: 我接受
       invalid_invitation_code: 邀请码无效。
       invitation_code: 邀请码
@@ -1975,11 +1977,12 @@ zh:
       first_name_only: （不显示给其他用户）
       location_description: 你可以选择提供你的准确住址或仅仅提供邮政编码。请至少填写邮政编码。你也可以通过地图选择一个地点。
       phone_number: 电话号码
+      weixin: 微信号
       profile_picture: 个人头像
       postal_code: 邮政编码
       profile_page: 点击查看你的个人信息页面
       profilemap: 地图视图
-      street_address: 地点
+      street_address: 地点      
       these_fields_are_shown_in_your: "该信息对所有%{service_name}用户可见"
       visible_to_everybody: 对所有人可见
       visible_to_registered_users: （对已登录用户可见）

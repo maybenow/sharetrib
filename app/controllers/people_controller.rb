@@ -76,7 +76,7 @@ class PeopleController < Devise::RegistrationsController
     session[:invitation_code] = params[:code] if params[:code]
 
     @person = if params[:person] then
-      Person.new(params[:person].slice(:given_name, :family_name, :email, :username))
+      Person.new(params[:person].slice(:given_name, :family_name, :email, :username, :phone_number))
     else
       Person.new()
     end
@@ -226,6 +226,7 @@ class PeopleController < Devise::RegistrationsController
         :family_name,
         :street_address,
         :phone_number,
+        :weixin,
         :image,
         :description,
         { location: [:address, :google_address, :latitude, :longitude] },

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518060235) do
+ActiveRecord::Schema.define(version: 20160609205235) do
 
   create_table "auth_tokens", force: :cascade do |t|
     t.string   "token",            limit: 255
@@ -627,7 +627,7 @@ ActiveRecord::Schema.define(version: 20160518060235) do
   add_index "marketplace_setup_steps", ["community_id"], name: "index_marketplace_setup_steps_on_community_id", unique: true, using: :btree
 
   create_table "marketplace_trials", force: :cascade do |t|
-    t.integer  "community_id", limit: 4,     null: false
+    t.integer  "community_id", limit: 4, null: false
     t.datetime "expires_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -908,6 +908,7 @@ ActiveRecord::Schema.define(version: 20160518060235) do
     t.string   "organization_name",                  limit: 255
     t.boolean  "deleted",                                          default: false
     t.string   "cloned_from",                        limit: 22
+    t.string   "weixin",                             limit: 255
   end
 
   add_index "people", ["authentication_token"], name: "index_people_on_authentication_token", using: :btree
