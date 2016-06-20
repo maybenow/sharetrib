@@ -223,13 +223,24 @@ class ListingsController < ApplicationController
       locale: I18n.locale,
       all_locales: @current_community.locales
     )
-
+logger.info " user has admin xiaosong_test #{@current_user.has_admin_rights?}"
+if @current_user.has_admin_rights?
     render :new, locals: {
              categories: @current_community.top_level_categories,
              subcategories: @current_community.subcategories,
              shapes: get_shapes,
              category_tree: category_tree
            }
+else
+
+      render :new, locals: {
+             categories: @current_community.top_level_categories,
+             subcategories: @current_community.subcategories,
+             shapes: get_normal_user_shapes,
+             category_tree: category_tree
+           }
+
+end  
   end
 
   def new_form_content
@@ -896,6 +907,19 @@ class ListingsController < ApplicationController
     }
   end
 
+  def get_normal_user_shapes
+    @shapes ||= listings_api.shapes.get(community_id: @current_community.id).maybe.or_else(nil).tap { |shapes|
+      raise ArgumentError.new("Cannot find any listing shape for community #{@current_community.id}") if shapes.nil?
+    }
+    @logos =[]
+    @shapes.each do |shape|
+      #logger.info " xiaosong_test #{shape[:id] == 3}"
+      @logos << shape if shape[:id] != 3
+    end
+          logger.info " xiaosong_test #{@logos}"
+
+    @logos
+  end
   def get_processes
     @processes ||= transactions_api.processes.get(community_id: @current_community.id).maybe.or_else(nil).tap { |processes|
       raise ArgumentError.new("Cannot find any transaction process for community #{@current_community.id}") if processes.nil?
@@ -925,4 +949,5 @@ class ListingsController < ApplicationController
         default: true
       }
   end
+  
 end

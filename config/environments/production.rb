@@ -1,6 +1,8 @@
 require_relative './common.rb'
 
 Kassi::Application.configure do
+  
+  APP_CONFIG ||= ConfigLoader.load_app_config
   # Settings specified here will take precedence over those in config/environment.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -45,7 +47,7 @@ Kassi::Application.configure do
 
   config.after_initialize do
     ActiveRecord::Base.logger = Rails.logger.clone
-    ActiveRecord::Base.logger.level = Logger::INFO
+    ActiveRecord::Base.logger.level = Logger::DEBUG
     ActionMailer::Base.logger = Rails.logger.clone
     ActionMailer::Base.logger.level = Logger::INFO
   end

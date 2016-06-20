@@ -4,6 +4,8 @@
 require File.expand_path('../application', __FILE__)
 require File.expand_path('../config_loader', __FILE__)
 
+Rails.logger = Logger.new("app.log")
+
 APP_CONFIG = ConfigLoader.load_app_config
 
 # For invalid fields, Rails adds a wrapper div.field_with_error around the input field. Which sucks,

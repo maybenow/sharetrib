@@ -28,12 +28,21 @@ class TransactionsController < ApplicationController
       }
     ).on_success { |((listing_id, listing_model, author_model, process, gateway))|
       booking = listing_model.unit_type == :day
+      
 
       transaction_params = HashUtils.symbolize_keys({listing_id: listing_model.id}.merge(params.slice(:start_on, :end_on, :quantity, :delivery)))
 
+
       case [process[:process], gateway, booking]
       when matches([:none])
+       # redirect_to "http://www.rubyonrails.org"
+       if (listing_model.listing_shape_id==3)
+         
+         redirect_to paypal_url("/infos/purchase_confirmation",params[:listing_id])
+         #redirect_to "http://www.rubyonrails.org"
+       else
         render_free(listing_model: listing_model, author_model: author_model, community: @current_community, params: transaction_params)
+       end
       when matches([:preauthorize, __, true])
         redirect_to book_path(transaction_params)
       when matches([:preauthorize, :paypal])
@@ -42,14 +51,21 @@ class TransactionsController < ApplicationController
         redirect_to preauthorize_payment_path(transaction_params)
       when matches([:postpay])
         redirect_to post_pay_listing_path(transaction_params)
+       
       else
+         
         opts = "listing_id: #{listing_id}, payment_gateway: #{gateway}, payment_process: #{process}, booking: #{booking}"
         raise ArgumentError.new("Cannot find new transaction path to #{opts}")
       end
+
+
     }.on_error { |error_msg, data|
       flash[:error] = Maybe(data)[:error_tr_key].map { |tr_key| t(tr_key) }.or_else("Could not start a transaction, error message: #{error_msg}")
       redirect_to(session[:return_to_content] || root)
     }
+    
+
+  
   end
 
   def create
@@ -317,6 +333,7 @@ class TransactionsController < ApplicationController
 
   def render_free(listing_model:, author_model:, community:, params:)
     # TODO This data should come from API
+    logger.info "listing_shape id is xiaosong_test #{listing_model.listing_shape_id}"
     listing = {
       id: listing_model.id,
       title: listing_model.title,
@@ -365,4 +382,23 @@ class TransactionsController < ApplicationController
              form_action: person_transactions_path(person_id: @current_user, listing_id: listing_model.id)
            }
   end
+  
+  
+   def paypal_url(return_path,id)
+    values = {
+        business: "merchant@gotealeaf.com",
+        cmd: "_xclick",
+        upload: 1,
+        return: "http://localhost:3000/#{return_path}",
+        invoice: "#{id}#{@current_user.id}",
+        amount: 11,
+        item_name: "course.name",
+        item_number: 12323,
+        quantity: '1'
+    }
+    "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+  end
+  def purchase_params
+      params.require(:registration).permit(:course_id, :full_name, :company, :email, :telephone)
+    end
 end

@@ -519,6 +519,8 @@ zh:
     edit_page: 编辑页面
     default_community_slogan: 集市
     default_community_description: 这是一个出售、出租、交换和共享商品与服务给其他成员的集市。
+    purchase_confirmation_slogan: 支付已确认
+    purchase_confirmation_description: 感谢你的惠顾，我们的团队会尽快确认及投递您的订单，如果你有其他问题请联系我们。
     cancel: 取消
     fields_that_are_mandatory: 标有星号（*）的为必填项。
     or: 或
@@ -1987,7 +1989,7 @@ zh:
       visible_to_everybody: 对所有人可见
       visible_to_registered_users: （对已登录用户可见）
       default_in_listing: （只有在发布新信息时作为默认值使用）
-      invisible: （不显示给其他用户）
+      invisible: （此信息不会显示给其他用户，但请尽量填写，如遇问题，管理员可以尽快联系你）
       image_is_processing: 你的个人头像图片正在准备。请过一会重新刷新页面。
     save_information: 保存信息
   shipping_address:

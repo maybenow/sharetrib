@@ -284,6 +284,7 @@ Kassi::Application.routes.draw do
         get :terms
         get :privacy
         get :news
+        get :purchase_confirmation
       end
     end
     resource :terms do
