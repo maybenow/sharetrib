@@ -417,6 +417,8 @@ class Community < ActiveRecord::Base
 
     if domain.present? && use_domain? # custom domain
       dom = domain
+      dom += ":#{port_string}" unless port_string.blank? 
+       # xiaosong add port number, since not use port 80 as default
     else # just a subdomain specified
       dom = "#{self.ident}.#{default_host}"
       dom += ":#{port_string}" unless port_string.blank?
