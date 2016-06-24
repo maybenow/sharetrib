@@ -520,7 +520,7 @@ function initialize_signup_form(locale, username_in_use_message, invalid_usernam
       }
     },
     rules: {
-      "person[username]": {required: true, minlength: 3, maxlength: 20, valid_username: true, remote: "/people/check_username_availability"},
+      "person[username]": {required: true, minlength: 1, maxlength: 20, valid_username: true, remote: "/people/check_username_availability"},
       "person[given_name]": {required: name_required, maxlength: 30},
       "person[family_name]": {required: name_required, maxlength: 30},
       "person[email]": {required: true, email: true, remote: "/people/check_email_availability_and_validity"},

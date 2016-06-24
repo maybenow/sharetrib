@@ -2,6 +2,15 @@
 class ListingsController < ApplicationController
   class ListingDeleted < StandardError; end
 
+
+# xiaosong add acts_as_commentable
+#  commentable = Post.create
+#  comment = commentable.comments.create
+ # comment.title = "First comment."
+ # comment.comment = "This is the first comment."
+ # comment.save
+
+
   # Skip auth token check as current jQuery doesn't provide it automatically
   skip_before_filter :verify_authenticity_token, :only => [:close, :update, :follow, :unfollow]
 
@@ -275,6 +284,8 @@ end
 
     listing_params = ListingFormViewUtils.filter(params[:listing], shape)
     listing_unit = Maybe(params)[:listing][:unit].map { |u| ListingViewUtils::Unit.deserialize(u) }.or_else(nil)
+    
+     #logger.info " create listing xiaosong_test #{@listing.comment_enable}"
     listing_params = ListingFormViewUtils.filter_additional_shipping(listing_params, listing_unit)
     validation_result = ListingFormViewUtils.validate(listing_params, shape, listing_unit)
 
@@ -291,7 +302,8 @@ end
         listing_shape_id: shape[:id],
         transaction_process_id: shape[:transaction_process_id],
         shape_name_tr_key: shape[:name_tr_key],
-        action_button_tr_key: shape[:action_button_tr_key]
+        action_button_tr_key: shape[:action_button_tr_key],
+        commentenalbe:  params[:comment_enable]
     ).merge(unit_to_listing_opts(m_unit)).except(:unit)
 
     @listing = Listing.new(listing_params)
