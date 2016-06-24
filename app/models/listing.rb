@@ -47,6 +47,7 @@
 #  shipping_price_cents            :integer
 #  shipping_price_additional_cents :integer
 #  emailenable                     :boolean
+#  commentenalbe                   :boolean
 #
 # Indexes
 #

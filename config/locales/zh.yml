@@ -1503,6 +1503,8 @@ zh:
       origin:
         location: 地点
         origin: 来源
+      comments_checkbox:
+        allow_comments: 允许跟贴
       send_button:
         save_listing: 发布
       share_type:
